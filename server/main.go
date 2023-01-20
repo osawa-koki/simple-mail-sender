@@ -4,12 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/smtp"
 	"os"
 	"path/filepath"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 )
+
+func MakeBody(to string, subject string, body string) string {
+	return fmt.Sprintf("To: %s\r\nSubject%s\r\n\r\n%s", to, subject, body)
+}
 
 func main() {
 	r := chi.NewRouter()
@@ -47,7 +52,15 @@ func main() {
 			SMTPPassword := reqBody["smtp_password"]
 
 			// メール送信
-			fmt.Println(mailFrom, mailTo, mailSubject, mailBody, SMTPServer, SMTPPort, SMTPUser, SMTPPassword)
+			smtpSvr := SMTPServer + ":" + SMTPPort
+			auth := smtp.PlainAuth("", SMTPUser, SMTPPassword, SMTPServer)
+			if err := smtp.SendMail(smtpSvr, auth, mailFrom, []string{}, []byte(MakeBody(mailTo, mailSubject, mailBody))); err != nil {
+				fmt.Println(err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			w.WriteHeader(http.StatusOK)
 		})
 	})
 
