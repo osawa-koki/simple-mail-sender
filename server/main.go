@@ -54,7 +54,7 @@ func main() {
 			// メール送信
 			smtpSvr := SMTPServer + ":" + SMTPPort
 			auth := smtp.PlainAuth("", SMTPUser, SMTPPassword, SMTPServer)
-			if err := smtp.SendMail(smtpSvr, auth, mailFrom, []string{}, []byte(MakeBody(mailTo, mailSubject, mailBody))); err != nil {
+			if err := smtp.SendMail(smtpSvr, auth, mailFrom, []string{mailTo}, []byte(MakeBody(mailTo, mailSubject, mailBody))); err != nil {
 				fmt.Println(err)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
