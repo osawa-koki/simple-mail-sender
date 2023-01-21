@@ -13,7 +13,7 @@ import (
 )
 
 func MakeBody(to string, subject string, body string) string {
-	return fmt.Sprintf("To: %s\r\nSubject%s\r\n\r\n%s", to, subject, body)
+	return fmt.Sprintf("To: %s\r\nSubject: %s\r\n\r\n%s", to, subject, body)
 }
 
 func main() {
