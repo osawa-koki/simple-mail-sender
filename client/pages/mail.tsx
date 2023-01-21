@@ -14,8 +14,8 @@ export default function Info() {
   const [useAuth, setUseAuth] = useState<boolean>(false);
   const [mailFrom, setMailFrom] = useState<string>("");
   const [mailTo, setMailTo] = useState<string>("");
-  const [mailSubject, setMailSubject] = useState<string>("");
-  const [mailBody, setMailBody] = useState<string>("");
+  const [mailSubject, setMailSubject] = useState<string>("💓 Love Letter 💓");
+  const [mailBody, setMailBody] = useState<string>("🐙🐙🐙\r\n\r\nI love you 💖💖💖\r\n");
   const [status, setStatus] = useState<MailSendStatus>(1);
   const [sending, setSending] = useState<boolean>(false);
 
@@ -58,11 +58,11 @@ export default function Info() {
         <Form>
           <Form.Group className="mt-3">
             <Form.Label>Email subject.</Form.Label>
-            <Form.Control type="email" placeholder="name@example.com" />
+            <Form.Control type="text" value={mailSubject} onInput={(e) => {setMailSubject((e.target as HTMLInputElement).value)}} placeholder="💓 Love Letter 💓" />
           </Form.Group>
           <Form.Group className="mt-3">
             <Form.Label>Enter Content.</Form.Label>
-            <Form.Control as="textarea" rows={5} />
+            <Form.Control as="textarea" value={mailBody} onInput={(e) => {setMailBody((e.target as HTMLInputElement).value)}} rows={5} />
           </Form.Group>
         </Form>
         <div className="center mt-5">
