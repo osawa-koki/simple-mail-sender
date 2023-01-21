@@ -17,6 +17,7 @@ export default function Info() {
   const [mailSubject, setMailSubject] = useState<string>("💓 Love Letter 💓");
   const [mailBody, setMailBody] = useState<string>("🐙🐙🐙\r\n\r\nI love you 💖💖💖\r\n");
   const [status, setStatus] = useState<MailSendStatus>(1);
+  const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState<boolean>(false);
 
   const sendMail = async () => {
@@ -43,6 +44,7 @@ export default function Info() {
       setStatus(0);
     } else {
       setStatus(-1);
+      setError(await res.text());
     }
     setSending(false);
   };
@@ -85,7 +87,7 @@ export default function Info() {
         </Form.Group>
         <Form>
           <Form.Group className="mt-3">
-            <Form.Label>Email subject.</Form.Label>
+            <Form.Label>Enter subject.</Form.Label>
             <Form.Control type="text" value={mailSubject} onInput={(e) => {setMailSubject((e.target as HTMLInputElement).value)}} placeholder="💓 Love Letter 💓" />
           </Form.Group>
           <Form.Group className="mt-3">
@@ -100,6 +102,8 @@ export default function Info() {
           status === -1 ? (
             <Alert variant="danger" className="mt-3">
               Failed to send mail🥺
+              <hr />
+              {error}
             </Alert>
           ) : status === 0 ? (
             <Alert variant="success" className="mt-3">
