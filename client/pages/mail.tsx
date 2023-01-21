@@ -11,13 +11,41 @@ export default function Info() {
   const [port, setPort] = useState<number>(587);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [useAuth, setUseAuth] = useState<boolean>(false);
+  const [useAuth, setUseAuth] = useState<boolean>(true);
   const [mailFrom, setMailFrom] = useState<string>("");
   const [mailTo, setMailTo] = useState<string>("");
   const [mailSubject, setMailSubject] = useState<string>("💓 Love Letter 💓");
   const [mailBody, setMailBody] = useState<string>("🐙🐙🐙\r\n\r\nI love you 💖💖💖\r\n");
   const [status, setStatus] = useState<MailSendStatus>(1);
   const [sending, setSending] = useState<boolean>(false);
+
+  const sendMail = async () => {
+    setSending(true);
+    setStatus(1);
+    await new Promise((resolve) => setTimeout(resolve, 10)); // 少し待つ。
+    const res = await fetch(`${setting.apiPath}/api/mail`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        smtp_server: hostname,
+        smtp_port: port.toString(),
+        smtp_user: username,
+        smtp_password: password,
+        mail_from: mailFrom,
+        mail_to: mailTo,
+        mail_subject: mailSubject,
+        mail_body: mailBody,
+      }),
+    });
+    if (res.status === 200) {
+      setStatus(0);
+    } else {
+      setStatus(-1);
+    }
+    setSending(false);
+  };
 
   return (
     <Layout>
@@ -65,8 +93,8 @@ export default function Info() {
             <Form.Control as="textarea" value={mailBody} onInput={(e) => {setMailBody((e.target as HTMLInputElement).value)}} rows={5} />
           </Form.Group>
         </Form>
-        <div className="center mt-5">
-          <Button variant="outline-primary" className="mt-3" disabled={sending}>Send  📨</Button>
+        <div className="center mt-3">
+          <Button variant="outline-primary" className="mt-3" disabled={sending} onClick={sendMail}>Send  📨</Button>
         </div>
         {
           status === -1 ? (

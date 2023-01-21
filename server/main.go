@@ -38,6 +38,7 @@ func main() {
 			var reqBody map[string]string
 			if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
 				w.WriteHeader(http.StatusBadRequest)
+				w.Write([]byte(err.Error()))
 				return
 			}
 
@@ -55,11 +56,10 @@ func main() {
 			smtpSvr := SMTPServer + ":" + SMTPPort
 			auth := smtp.PlainAuth("", SMTPUser, SMTPPassword, SMTPServer)
 			if err := smtp.SendMail(smtpSvr, auth, mailFrom, []string{mailTo}, []byte(MakeBody(mailTo, mailSubject, mailBody))); err != nil {
-				fmt.Println(err)
 				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(err.Error()))
 				return
 			}
-
 			w.WriteHeader(http.StatusOK)
 		})
 	})
