@@ -39,7 +39,7 @@ export default function Info() {
         <Form.Group className="mt-3">
           <Form.Label>Enter password.</Form.Label>
           <InputGroup className="mb-3">
-            <InputGroup.Checkbox />
+            <InputGroup.Checkbox checked={useAuth} onInput={(e) => {setUseAuth(!(e.target as HTMLInputElement).checked)}} />
             <Form.Control type="text" value={password} onInput={(e) => {setPassword((e.target as HTMLInputElement).value)}} placeholder="p@ssw0rd" />
           </InputGroup>
         </Form.Group>
