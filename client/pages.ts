@@ -13,8 +13,8 @@ const pages = [
     name: "Contact",
   },
   {
-    path: "/info/",
-    name: "Info",
+    path: "/mail/",
+    name: "Mail",
   },
 ];
 
