@@ -3,7 +3,7 @@
 📨📨📨 SMTPでメールを送信する簡易WEBページ。  
 GoとNext.jsで実装。  
 
-![成果物]()
+![成果物](.development/img/fruit.gif)  
 
 ## 実行方法
 
