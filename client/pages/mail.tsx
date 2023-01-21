@@ -8,7 +8,7 @@ type MailSendStatus = -1 | 0 | 1;
 export default function Info() {
 
   const [hostname, setHostname] = useState<string>("");
-  const [port, setPort] = useState<number>(25);
+  const [port, setPort] = useState<number>(587);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [useAuth, setUseAuth] = useState<boolean>(false);
