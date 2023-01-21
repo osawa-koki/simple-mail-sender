@@ -3,12 +3,6 @@ import { Button, Form, InputGroup, Table } from "react-bootstrap";
 import { useState } from "react";
 import setting from "../setting";
 
-type Lang = {
-  name: string;
-  birthday: Date;
-  on_trend: boolean;
-}
-
 export default function Info() {
 
   return (
